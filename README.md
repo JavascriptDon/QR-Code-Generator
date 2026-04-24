@@ -48,6 +48,10 @@ npm run dev
 
 Vite will give you a local URL (usually http://localhost:5173) where the app runs.
 
+## Preview
+
+<img width="1920" height="951" alt="qr-code" src="https://github.com/user-attachments/assets/13176def-fe4e-4f4a-a512-82b2e2f12b8b" />
+
 
 ## Notes
 This project is meant for learning and prototyping. It uses Vite for fast local development and bundling.
