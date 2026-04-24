@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" href="/qr-code.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QR-Generator</title>
     <link rel="stylesheet" href="./src/style.css"/>
@@ -11,22 +14,51 @@
   </head>
   <body>
     <div class="container">
-    <div class="header-row">
-      <h1>QR Code Generator</h1>
-      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
-        Dark mode
-      </button>
+      <div class="header-row">
+        <div class="title-block">
+          <p class="eyebrow">Smart QR Studio</p>
+          <h1>QR Code Generator</h1>
+          <p class="intro">
+            Create polished QR codes in a few seconds, switch color styles, and keep your recent links close.
+          </p>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+          Dark mode
+        </button>
+      </div>
+
+      <section class="panel panel-controls">
+        <input id="text-input" type="text" placeholder="Enter text or URL">
+
+        <label class="style-picker" for="style-select">
+          <span>QR Style</span>
+          <select id="style-select">
+            <option value="classic">Classic</option>
+            <option value="ocean">Ocean</option>
+            <option value="sunset">Sunset</option>
+            <option value="forest">Forest</option>
+            <option value="berry">Berry</option>
+          </select>
+        </label>
+
+        <button id="generate-btn">Generate QR</button>
+      </section>
+
+      <section class="panel preview-panel">
+        <div class="preview-heading">
+          <h2>Live Preview</h2>
+          <span>Ready to scan</span>
+        </div>
+        <div id="qr-container"></div>
+      </section>
+
+      <section id="history-section" class="panel">
+        <div class="section-heading">
+          <h2>Recent History</h2>
+          <span>Your latest generated entries</span>
+        </div>
+        <ul id="history-list"></ul>
+      </section>
     </div>
-
-    <input id="text-input" type="text" placeholder="Enter text or URL">
-
-    <button id="generate-btn">Generate QR</button>
-
-    <div id="qr-container"></div>
-    <section id="history-section">
-      <h2>Recent History</h2>
-      <ul id="history-list"></ul>
-    </section>
-  </div>
   </body>
 </html>

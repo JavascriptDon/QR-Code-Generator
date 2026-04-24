@@ -5,11 +5,36 @@ const btn = document.getElementById("generate-btn");
 const container = document.getElementById("qr-container");
 const historyList = document.getElementById("history-list");
 const themeToggle = document.getElementById("theme-toggle");
+const styleSelect = document.getElementById("style-select");
 
 const HISTORY_STORAGE_KEY = "qr-generator-history";
 const THEME_STORAGE_KEY = "qr-generator-theme";
+const STYLE_STORAGE_KEY = "qr-generator-style";
 const MAX_HISTORY_ITEMS = 8;
 let currentGeneratedText = "";
+
+const QR_STYLE_PRESETS = {
+  classic: {
+    light: { dark: "#111111", light: "#ffffff" },
+    dark: { dark: "#f5f7ff", light: "#111827" },
+  },
+  ocean: {
+    light: { dark: "#005f73", light: "#e6fcff" },
+    dark: { dark: "#90e0ef", light: "#102a43" },
+  },
+  sunset: {
+    light: { dark: "#c2410c", light: "#fff7ed" },
+    dark: { dark: "#fdba74", light: "#431407" },
+  },
+  forest: {
+    light: { dark: "#166534", light: "#f0fdf4" },
+    dark: { dark: "#86efac", light: "#052e16" },
+  },
+  berry: {
+    light: { dark: "#9d174d", light: "#fdf2f8" },
+    dark: { dark: "#f9a8d4", light: "#4a044e" },
+  },
+};
 
 function loadTheme() {
   const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
@@ -20,10 +45,19 @@ function saveTheme(theme) {
   localStorage.setItem(THEME_STORAGE_KEY, theme);
 }
 
+function loadStyle() {
+  const savedStyle = localStorage.getItem(STYLE_STORAGE_KEY);
+  return QR_STYLE_PRESETS[savedStyle] ? savedStyle : "classic";
+}
+
+function saveStyle(style) {
+  localStorage.setItem(STYLE_STORAGE_KEY, style);
+}
+
 function getQRCodeColors() {
-  return document.body.dataset.theme === "dark"
-    ? { dark: "#f5f7ff", light: "#111827" }
-    : { dark: "#111111", light: "#ffffff" };
+  const theme = document.body.dataset.theme === "dark" ? "dark" : "light";
+  const selectedStyle = QR_STYLE_PRESETS[styleSelect.value] ? styleSelect.value : "classic";
+  return QR_STYLE_PRESETS[selectedStyle][theme];
 }
 
 function updateThemeToggleLabel(theme) {
@@ -106,7 +140,8 @@ function addToHistory(text) {
   renderHistory();
 }
 
-function generateQRCode(text) {
+function generateQRCode(text, options = {}) {
+  const { saveToHistory = true } = options;
   const colors = getQRCodeColors();
 
   QRCode.toCanvas(text, { width: 200, color: colors }, (err, canvas) => {
@@ -117,7 +152,9 @@ function generateQRCode(text) {
     container.innerHTML = "";
     container.appendChild(canvas);
     currentGeneratedText = text;
-    addToHistory(text);
+    if (saveToHistory) {
+      addToHistory(text);
+    }
   });
 }
 
@@ -138,9 +175,18 @@ themeToggle.addEventListener("click", () => {
   saveTheme(nextTheme);
 
   if (currentGeneratedText) {
-    generateQRCode(currentGeneratedText);
+    generateQRCode(currentGeneratedText, { saveToHistory: false });
   }
 });
 
+styleSelect.addEventListener("change", () => {
+  saveStyle(styleSelect.value);
+
+  if (currentGeneratedText) {
+    generateQRCode(currentGeneratedText, { saveToHistory: false });
+  }
+});
+
+styleSelect.value = loadStyle();
 applyTheme(loadTheme());
 renderHistory();
