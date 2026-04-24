@@ -1,9 +1,5 @@
 ## QR Code Generator
 
-A simple and fast QR Code Generator built with HTML, CSS, JavaScript, and Vite.
-
-Users can enter any text or URL and instantly generate a QR code rendered on a <canvas> element using the qrcode npm package.
-
 *What is a QR Code?*
 
 A QR code is just a grid of black and white squares (called modules) that encode data using a specific set of rules.
