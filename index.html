@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/qr-code.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR-Generator</title>
+    <link rel="stylesheet" href="./src/style.css"/>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <div class="container">
+    <div class="header-row">
+      <h1>QR Code Generator</h1>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+        Dark mode
+      </button>
+    </div>
+
+    <input id="text-input" type="text" placeholder="Enter text or URL">
+
+    <button id="generate-btn">Generate QR</button>
+
+    <div id="qr-container"></div>
+    <section id="history-section">
+      <h2>Recent History</h2>
+      <ul id="history-list"></ul>
+    </section>
+  </div>
+  </body>
+</html>
